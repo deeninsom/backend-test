@@ -39,9 +39,14 @@ server.get('/users/:id', (req, res) => {
 // Endpoint untuk menambahkan pengguna baru
 server.post('/users', (req, res) => {
     const { name, email, password } = req.body;
-    const id = router.db.get('users').size().value() + 1;
-    const data = router.db.get('users').push({ id, name, email, password });
-    res.json({data : {data}});
+    const newUser = {
+        id: router.db.get('users').size().value() + 1,
+        name,
+        email,
+        password
+      };
+    
+      router.db.push(newUser);  res.json({data : {data}});
 });
 
 // Endpoint untuk mengubah data pengguna

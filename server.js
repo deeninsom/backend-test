@@ -26,7 +26,7 @@ app.use('/api',auth, server);
 // Endpoint untuk menampilkan semua pengguna
 server.get('/users', (req, res) => {
     const data = router.db.get('users').value();
-    res.json({data : {data}});
+    res.status(200).json({data : data});
 });
 
 // Endpoint untuk menampilkan pengguna berdasarkan ID
@@ -48,8 +48,8 @@ server.post('/users', (req, res) => {
 server.put('/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const { name, email, password } = req.body;
-    const data = router.db.get('users').find({ id }).assign({ name, email,password }).write();
-    res.json({data : {data}, message: 'User Update'})
+    router.db.get('users').find({ id }).assign({ name, email,password }).write();
+    res.json({data: {name,email, password}, message: 'User Update'})
 });
 
 // Endpoint untuk menghapus pengguna berdasarkan ID

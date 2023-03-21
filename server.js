@@ -28,11 +28,8 @@ app.use('/api', server);
 // Endpoint untuk registrasi pengguna baru
 server.post('/login', (req, res) => {
     const { name, password } = req.body;
-    const user = router.db.get('users')
-    if (user) {
-      return res.json({ success: true, user });
-    }
-    res.status(401).json({ success: false, message: 'Invalid credentials', data: name, password });
+  const user = db.get('users').find({ name, password }).value();
+  res.json({ data: user });
 });
 
 server.post('/register', (req, res) => {
@@ -59,8 +56,8 @@ server.get('/users/:id', (req, res) => {
 server.post('/users', (req, res) => {
     const { name, email, password } = req.body;
     const id = router.db.get('users').size().value() + 1;
-    router.db.get('users').push({ id, name, email }).write();
-    res.json({ id, name, email });
+    router.db.get('users').push({ id, name, email, password }).write();
+    res.json({ id, name, email, password });
 });
 
 // Endpoint untuk mengubah data pengguna

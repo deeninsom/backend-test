@@ -15,14 +15,32 @@ auth.post('/login', (req, res) => {
       return res.status(401).json({ error: 'Username atau password salah' });
     }
   
-    res.json({ data: user });
+    res.json({ data: {name, password}, message: "Sukses" });
   });
 
   auth.post('/register', (req, res) => {
-    const { name, email, password } = req.body;
-    const id = router.db.get('users').size().value() + 1;
-    router.db.get('users').push({ id, name, email, password }).write();
-    res.json({ id, name, email, password });
-});
+    const { name,email, password } = req.body;
+  
+    if (!name || !password) {
+      return res.status(400).json({ error: 'Data pengguna tidak lengkap' });
+    }
+  
+    // const userExist = router.db.some(u => u.name === name);
+  
+    // if (userExist) {
+    //   return res.status(409).json({ error: 'name telah terdaftar' });
+    // }
+  
+    const newUser = {
+      id: router.db.get('users').size().value() + 1,
+      name,
+      email,
+      password
+    };
+  
+    router.db.push(newUser);
+  
+    res.json({ data: newUser });
+  });
 
   module.exports = auth

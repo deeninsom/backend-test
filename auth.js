@@ -18,5 +18,11 @@ auth.post('/login', (req, res) => {
     res.json({ data: user });
   });
 
+  auth.post('/register', (req, res) => {
+    const { name, email, password } = req.body;
+    const id = router.db.get('users').size().value() + 1;
+    router.db.get('users').push({ id, name, email, password }).write();
+    res.json({ id, name, email, password });
+});
 
   module.exports = auth

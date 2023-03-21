@@ -23,13 +23,6 @@ server.use(router);
 // Jalankan server
 app.use('/api',auth, server);
 
-// Import library bcrypt untuk enkripsi password
-
-
-
-
-
-
 // Endpoint untuk menampilkan semua pengguna
 server.get('/users', (req, res) => {
     const data = router.db.get('users').value();

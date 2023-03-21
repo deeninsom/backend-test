@@ -28,12 +28,7 @@ app.use('/api',auth, server);
 
 
 
-server.post('/register', (req, res) => {
-    const { name, email, password } = req.body;
-    const id = router.db.get('users').size().value() + 1;
-    router.db.get('users').push({ id, name, email, password }).write();
-    res.json({ id, name, email, password });
-});
+
 
 // Endpoint untuk menampilkan semua pengguna
 server.get('/users', (req, res) => {
@@ -52,8 +47,8 @@ server.get('/users/:id', (req, res) => {
 server.post('/users', (req, res) => {
     const { name, email, password } = req.body;
     const id = router.db.get('users').size().value() + 1;
-    router.db.get('users').push({ id, name, email, password }).write();
-    res.json({ id, name, email, password });
+    const data = router.db.get('users').push({ id, name, email, password }).write();
+    res.json(data);
 });
 
 // Endpoint untuk mengubah data pengguna

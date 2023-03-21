@@ -40,7 +40,7 @@ server.get('/users/:id', (req, res) => {
 server.post('/users', (req, res) => {
     const { name, email, password } = req.body;
     const id = router.db.get('users').size().value() + 1;
-    const data = router.db.get('users').push({ id, name, email, password }).write();
+    const data = router.db.get('users').push({ id, name, email, password });
     res.json({data : {data}});
 });
 

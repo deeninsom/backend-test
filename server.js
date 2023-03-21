@@ -46,7 +46,8 @@ server.post('/users', (req, res) => {
         password
       };
     
-      router.db.push(newUser);  res.json({data : {data}});
+      router.db.push(newUser); 
+       res.json({data : newUser});
 });
 
 // Endpoint untuk mengubah data pengguna

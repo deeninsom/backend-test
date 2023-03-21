@@ -37,7 +37,7 @@ users.put('/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const { name, email, password } = req.body;
     router.db.get('users').find({ id }).assign({ name, email, password });
-    res.json({ data: { name, email, password }, message: 'User Update' })
+    res.json({ data: name, email, password , message: 'User Update' })
 });
 
 // Endpoint untuk menghapus pengguna berdasarkan ID

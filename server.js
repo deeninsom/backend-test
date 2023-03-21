@@ -26,14 +26,14 @@ app.use('/api',auth, server);
 // Endpoint untuk menampilkan semua pengguna
 server.get('/users', (req, res) => {
     const data = router.db.get('users').value();
-    res.json(data);
+    res.json({data : {data}});
 });
 
 // Endpoint untuk menampilkan pengguna berdasarkan ID
 server.get('/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const data = router.db.get('users').find({ id }).value();
-    res.json(data);
+    res.json({data : {data}});
 });
 
 // Endpoint untuk menambahkan pengguna baru
@@ -41,22 +41,22 @@ server.post('/users', (req, res) => {
     const { name, email, password } = req.body;
     const id = router.db.get('users').size().value() + 1;
     const data = router.db.get('users').push({ id, name, email, password }).write();
-    res.json(data);
+    res.json({data : {data}});
 });
 
 // Endpoint untuk mengubah data pengguna
 server.put('/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const { name, email, password } = req.body;
-    router.db.get('users').find({ id }).assign({ name, email,password }).write();
-    res.json({ id, name, email, password });
+    const data = router.db.get('users').find({ id }).assign({ name, email,password }).write();
+    res.json({data : {data}, message: 'User Update'})
 });
 
 // Endpoint untuk menghapus pengguna berdasarkan ID
 server.delete('/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    router.db.get('users').remove({ id }).write();
-    res.json({ message: 'User deleted' })
+    const data = router.db.get('users').remove({ id }).write();
+    res.json({data : {data}, message: 'User deleted' })
 })
 
 app.listen(port, () => {

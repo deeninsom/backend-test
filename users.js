@@ -37,14 +37,14 @@ users.put('/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const { name, email, password } = req.body;
     router.db.get('users').find({ id }).assign({ name, email, password });
-    res.json({ data: name, email, password , message: 'User Update' })
+    res.json({ data: {name, email, password}, message: 'User Update' })
 });
 
 // Endpoint untuk menghapus pengguna berdasarkan ID
 users.delete('/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    const data = router.db.get('users').remove({ id }).write();
-    res.json({ data: { data }, message: 'User deleted' })
+    router.db.get('users').remove({ id });
+    res.json({message: 'User deleted' })
 })
 
 

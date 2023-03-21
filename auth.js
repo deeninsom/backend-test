@@ -24,13 +24,7 @@ auth.post('/login', (req, res) => {
     if (!name || !password) {
       return res.status(400).json({ error: 'Data pengguna tidak lengkap' });
     }
-  
-    // const userExist = router.db.some(u => u.name === name);
-  
-    // if (userExist) {
-    //   return res.status(409).json({ error: 'name telah terdaftar' });
-    // }
-  
+    
     const newUser = {
       id: router.db.get('users').size().value() + 1,
       name,
